@@ -1,0 +1,15 @@
+---
+layout: post
+title: 坂井泉水
+date: 2014-10-05 23:09
+author: Little Horse
+comments: true
+categories: [随笔]
+---
+<!--StartFragment-->
+<p style="margin: 0in; font-family: SimSun; font-size: 10.5pt;">上次在优酷闲逛时，重听了《灌篮高手》的插曲《我的朋友》，第一次留意了歌曲的演唱者——坂井泉水。网络上的留言毫不掩饰对这位日本女歌手的喜爱，出于好奇，我继续浏览了她的演出视频和个人介绍。几乎没有任何迟疑，她独特的气质立刻吸引了我。</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10.5pt;">网上的歌迷称呼她姐姐，就像称呼张国荣哥哥一样自然。而她与张国荣一样的地方，除了无可取代的气质、自己作词的创作才华外，就是同样因为意外英年早逝的命运。天妒红颜，大概如此。听了几首她的歌，个人感觉，坂井泉水的歌曲风格是悲伤与希望交织的，看她的演唱会视频，我很容易想到邓丽君、陈晓旭以及其他一些名字。</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10.5pt;">小学毕业时我有一盘磁带里有那首《我的朋友》，当时应该正是坂井所在的乐队ZARD当红的时候，但那时我不知道这样一位女歌手。后来听得烂熟的柯南主题曲《转动命运的赌盘》也是坂井唱的。坂井的歌总是充满希望的力量，即使抒发悲伤也没有消沉的感觉。因为这种风格，她的早逝更让人感慨：悲剧总是把希望毁灭的过程。我最近在手机里下载了几首她的经典歌曲，下班路上听感到很快乐。</p>
+<p style="margin: 0in; font-size: 10.5pt;"><span lang="zh-CN" style="font-family: SimSun;">想到十几年前用磁带听过的女歌手这样美丽，我感到幸福；但在她离开</span><span lang="en-US" style="font-family: Calibri;">7</span><span lang="zh-CN" style="font-family: SimSun;">年后我才第一次知道她的名字，又有些遗憾——我本来也可以有一位偶像的。</span></p>
+<!--EndFragment-->
+<img style="display: block; margin-left: auto; margin-right: auto;" title="NewImage.png" alt="NewImage" src="http://manan.org/images/wp/2014/10/NewImage.png" width="354" height="450" border="0" />
