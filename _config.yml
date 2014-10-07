@@ -74,21 +74,19 @@ follow:
   - class: icon-rss
     url: /atom.xml
   - class: icon-weibo
-    url: http://weibo.com/pizn
+    url: http://weibo.com/imlittlehorse
 #  - class: icon-renren
 #    url: http://renren.com
   - class: icon-github-alt
-    url: http://github.com/pizn
+    url: http://github.com/nanma
   - class: icon-twitter
-    url: http://twitter.com/piznlin
+    url: http://twitter.com/nxmanan
 #  - class: icon-google-plus
 #    url: http://google.com
 
 #Links
 customLinks:
   - item:
-    - text: 掌心
-      url: http://www.zhanxin.info
     - text: Jekyll
       url: http://jekyllrb.com
     - text: Jekyll Theme
