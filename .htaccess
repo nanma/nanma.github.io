@@ -1,0 +1,6 @@
+Options -Indexes +FollowSymLinks
+
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^wiki(/.*|)$ http://wiki.manan.org$1 [R=301,L,NC]
