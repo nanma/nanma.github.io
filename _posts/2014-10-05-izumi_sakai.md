@@ -15,4 +15,4 @@ categories: [随笔]
 
 想到十几年前用磁带听过的女歌手这样美丽，我感到幸福；但在她离开7年后我才第一次知道她的名字，又有些遗憾——我本来也可以有一位偶像的。
 <!--EndFragment-->
-<img style="display: block; margin-left: auto; margin-right: auto;" title="NewImage.png" alt="NewImage" src="http://manan.org/images/wp/2014/10/NewImage.png" width="354" height="450" border="0" />
+<img style="display: block; margin-left: auto; margin-right: auto;" title="NewImage.png" alt="NewImage" src="/images/wp/2014/10/NewImage.png" width="354" height="450" border="0" />
