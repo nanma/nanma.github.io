@@ -182,7 +182,7 @@ a         { color: #91736b; text-decoration: none; }
     color: #565656;
 }
 .main .article ul, .main .article ol {
-    list-style-type: disc;
+    list-style-type: decimal;
     padding-left: 20px;
     margin-bottom: 1em;
 }
