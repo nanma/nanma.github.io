@@ -40,8 +40,8 @@ timezone:      null
 
 #Site config
 title: 马楠的博客
-description: Just another Jekyll theme design and code by zhanxin.info.
-keywords: Jekyll Theme
+description: 马楠的博客——发出声音就是寻找自我的开始。
+keywords: manan blog
 url: http://manan.org
 feed: /atom.xml
 favicon: http://manan.org/images/favicon.ico
@@ -105,7 +105,7 @@ customLinks:
 
 #googleAnaly, your id link UA-12345678-X
 googleAnaly:
-  config: true
+  config: false
   id: UA-40169250-1
 
 #comment config

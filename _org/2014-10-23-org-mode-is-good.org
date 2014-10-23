@@ -1,0 +1,14 @@
+* Emacs and org mode are great software :_mo_:
+  :PROPERTIES:
+  :ID:       029D9AF1-D1C6-43D6-AD8A-3F473C77B427
+  :Date: [2014-10-23 四]
+  :END:
+** Why ?
+好软件是不言自明的.
+
+#+CAPTION: title for the image
+#+LABEL: fig:tag_for_img
+[[../images/aside-bg.jpg]]
+
+** How ?
+** What?
