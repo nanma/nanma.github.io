@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 从WordPress到Jekylljekyll
+title: 从WordPress到Jekyll
 date: 2014-10-21
 author: Little Horse
 categories:
