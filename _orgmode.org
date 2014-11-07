@@ -1,15 +1,15 @@
 * COMMENT Project Definitions              :PROJECT_DEFS:
 ** mo
    :PROPERTIES:
-   :ID:       5859A67F-0792-4D1B-BD07-FD83E301953F
+   :ID:       4738708B-7E0D-4DED-9DC7-47662A59B0FA
    :END:
 *** body-only t
 *** publish-to-jekyll t
-*** default-layout "nil"
-*** base-directory "~/workspace/blog/_org"
+*** default-layout "post"
+*** base-directory "~/Documents/blog/_org"
 *** base-extension "org"
 *** recursive t
-*** publishing-directory "~/workspace/blog/_posts/"
+*** publishing-directory "~/Documents/blog/_posts/"
 *** publishing-function 'org-html-publish-to-html
 *** headline-levels 4
 *** section-numbers nil
@@ -25,8 +25,8 @@
 *** with-latex t
 *** with-drawers nil
 *** toc-heading "Contents"
-*** static-base-directory "~/workspace/blog/images"
-*** static-publishing-directory "~/workspace/blog/images"
+*** static-base-directory "~/Documents/blog/images"
+*** static-publishing-directory "~/Documents/blog/_posts/static/"
 *** static-base-extension "css\\|js\\|less\\|scss\\|php\\|rb\\|py\\|pdf\\|jpg\\|gif\\|png"
 *** static-publishing-function 'org-publish-attachment
 *** static-recursive t

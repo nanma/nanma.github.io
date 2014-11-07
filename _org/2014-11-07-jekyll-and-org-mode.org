@@ -1,0 +1,6 @@
+* Jekyll and org mode                                                  :_mo_:
+  :PROPERTIES:
+  :ID:       80C0BCDD-F1C9-4902-9709-46BB8166E440
+  :DATE: [2014-11-07 五]
+  :END:
+文章
