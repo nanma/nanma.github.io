@@ -1,0 +1,39 @@
+* rsync_usage  :_mo_:
+  :PROPERTIES:
+  :ID:       DFE110EC-8220-4C7D-92C2-4DB151D086F8
+  :DATE: [2014-11-07 Fri]
+  :END:
+
+项目需要从线上服务器拉大量的数据到办公网络的测试机中，由于传输过程中VPN经常断，导致数据传输失败。为了解决这个问题，写了一个脚本用来重连VPN，并重启传输任务：
+#+BEGIN_SRC sh -n
+#!/bin/ bash
+
+cp /etc/resolv.conf.bak /etc/resolv.conf
+/usr/sbin/vpnc-disconnect
+sleep 5
+/usr/sbin/vpnc
+binary="rsync"
+cnt=$(ps aux | grep "\<$binary\>" | grep -v "grep" | grep -v "\<vi\>" | wc -l)
+    if [ $cnt -eq 0 ]; then
+      echo "Server not started yet"
+    fi
+    pid=$(ps aux | grep "\<$binary\>" | grep -v "grep" | grep -v "\<vi\>" | awk '{print $2}')
+    echo $pid
+    if [ "X$pid" = "X" ]; then
+      echo "No server instance found"
+    fi
+    kill -9 $pid
+nohup rsync -av -e 'ssh -i /home/manan/prikey' search@10.10.65.160:/var/data /var > /home/user/data.log 2>&1 &
+#+END_SRC
+脚本会中断VPN并重连，杀掉已有的rsync进程，然后重启rsync任务。在crontab中添加这个脚本，每两个小时执行一次：
+#+BEGIN_SRC sh
+#crontab task
+50 */2 * * * /bin/bash /home/user/restart_service.sh > /home/user/restart.log 2>&1
+#+END_SRC
+不过实际执行中发现，数据传输始终不能完成。原来在间隔的两小时内，有些大文件传不完，rsync进程重启再次从头开始传输中断 的文件，传完之前又被杀掉，如此循环往复。经过查询，rsync支持断点续传，在原来命令上加入 =-P= 参数就可以了。把上面脚本中rsync命令改成：
+#+BEGIN_SRC sh
+nohup rsync -avP -e 'ssh -i /home/manan/prikey' ...
+#+END_SRC
+再次开始任务，数据传输很快完成。
+
+更多关于rsync的续传，可以参考我的wiki：http://wiki.manan.org/os/linux/rsync.html。

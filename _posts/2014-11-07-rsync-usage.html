@@ -1,0 +1,56 @@
+---
+title: rsync断点续传
+layout: post
+author: manan
+date: 2014-11-07 00:00:00 +0800
+---
+
+<p>
+项目需要从线上服务器拉大量的数据到办公网络的测试机中，由于传输过程中VPN经常断，导致数据传输失败。为了解决这个问题，写了一个脚本用来重连VPN，并重启传输任务：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">!/</span><span style="color: #F0DFAF; font-weight: bold;">bin/</span><span style="color: #7F9F7F;"> bash</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>cp /etc/resolv.conf.bak /etc/resolv.conf
+<span class="linenr"> 4: </span>/usr/sbin/vpnc-disconnect
+<span class="linenr"> 5: </span>sleep 5
+<span class="linenr"> 6: </span>/usr/sbin/vpnc
+<span class="linenr"> 7: </span><span style="color: #DFAF8F;">binary</span>=<span style="color: #CC9393;">"rsync"</span>
+<span class="linenr"> 8: </span><span style="color: #DFAF8F;">cnt</span>=$(ps aux | grep <span style="color: #CC9393;">"\&lt;$binary\&gt;"</span> | grep -v <span style="color: #CC9393;">"grep"</span> | grep -v <span style="color: #CC9393;">"\&lt;vi\&gt;"</span> | wc -l)
+<span class="linenr"> 9: </span>    <span style="color: #F0DFAF; font-weight: bold;">if</span> [ $<span style="color: #DFAF8F;">cnt</span> -eq 0 ]; <span style="color: #F0DFAF; font-weight: bold;">then</span>
+<span class="linenr">10: </span>      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Server not started yet"</span>
+<span class="linenr">11: </span>    <span style="color: #F0DFAF; font-weight: bold;">fi</span>
+<span class="linenr">12: </span>    <span style="color: #DFAF8F;">pid</span>=$(ps aux | grep <span style="color: #CC9393;">"\&lt;$binary\&gt;"</span> | grep -v <span style="color: #CC9393;">"grep"</span> | grep -v <span style="color: #CC9393;">"\&lt;vi\&gt;"</span> | awk <span style="color: #DC8CC3; background-color: #3F3F3F;">'{print $2}')</span>
+<span class="linenr">13: </span>    <span style="color: #DCDCCC; font-weight: bold;">echo</span> $<span style="color: #DFAF8F;">pid</span>
+<span class="linenr">14: </span>    <span style="color: #F0DFAF; font-weight: bold;">if</span> [ <span style="color: #CC9393;">"X$pid"</span> = <span style="color: #CC9393;">"X"</span> ]; <span style="color: #F0DFAF; font-weight: bold;">then</span>
+<span class="linenr">15: </span>      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"No server instance found"</span>
+<span class="linenr">16: </span>    <span style="color: #F0DFAF; font-weight: bold;">fi</span>
+<span class="linenr">17: </span>    <span style="color: #DCDCCC; font-weight: bold;">kill</span> -9 $<span style="color: #DFAF8F;">pid</span>
+<span class="linenr">18: </span>nohup rsync -av -e <span style="color: #CC9393;">'ssh -i /home/manan/prikey'</span> search@10.10.65.160:/var/data /va<span style="color: #DC8CC3; background-color: #3F3F3F;">r &gt; /home/user/data.log 2&gt;&amp;1 &amp;</span>
+</pre>
+</div>
+<p>
+脚本会中断VPN并重连，杀掉已有的rsync进程，然后重启rsync任务。在crontab中添加这个脚本，每两个小时执行一次：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">crontab task</span>
+50 */2 * * * /bin/bash /home/user/restart_service.sh &gt; /home/user/restart.log 2&gt;<span style="color: #DC8CC3; background-color: #3F3F3F;">&amp;1</span>
+</pre>
+</div>
+<p>
+不过实际执行中发现，数据传输始终不能完成。原来在间隔的两小时内，有些大文件传不完，rsync进程重启再次从头开始传输中断 的文件，传完之前又被杀掉，如此循环往复。经过查询，rsync支持断点续传，在原来命令上加入 <code>-P</code> 参数就可以了。把上面脚本中rsync命令改成：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">nohup rsync -avP -e <span style="color: #CC9393;">'ssh -i /home/manan/prikey'</span> ...
+</pre>
+</div>
+<p>
+再次开始任务，数据传输很快完成。
+</p>
+
+<p>
+更多关于rsync的续传，可以参考我的wiki：<a href="http://wiki.manan.org/os/linux/rsync.html">http://wiki.manan.org/os/linux/rsync.html</a>。
+</p>
