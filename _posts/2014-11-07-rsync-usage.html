@@ -27,7 +27,7 @@ date: 2014-11-07 00:00:00 +0800
 <span class="linenr">15: </span>      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"No server instance found"</span>
 <span class="linenr">16: </span>    <span style="color: #F0DFAF; font-weight: bold;">fi</span>
 <span class="linenr">17: </span>    <span style="color: #DCDCCC; font-weight: bold;">kill</span> -9 $<span style="color: #DFAF8F;">pid</span>
-<span class="linenr">18: </span>nohup rsync -av -e <span style="color: #CC9393;">'ssh -i /home/manan/prikey'</span> search@10.10.65.160:/var/data /va<span style="color: #DC8CC3; background-color: #3F3F3F;">r &gt; /home/user/data.log 2&gt;&amp;1 &amp;</span>
+<span class="linenr">18: </span>nohup rsync -av -e <span style="color: #CC9393;">'ssh -i /home/user/prikey'</span> search@10.10.65.160:/var/data /var<span style="color: #DC8CC3; background-color: #3F3F3F;"> &gt; /home/user/data.log 2&gt;&amp;1 &amp;</span>
 </pre>
 </div>
 <p>
@@ -44,7 +44,7 @@ date: 2014-11-07 00:00:00 +0800
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">nohup rsync -avP -e <span style="color: #CC9393;">'ssh -i /home/manan/prikey'</span> ...
+<pre class="src src-sh">nohow rsync -avP -e <span style="color: #CC9393;">'ssh -i /home/manan/prikey'</span> ...
 </pre>
 </div>
 <p>
@@ -52,5 +52,5 @@ date: 2014-11-07 00:00:00 +0800
 </p>
 
 <p>
-更多关于rsync的续传，可以参考我的wiki：<a href="http://wiki.manan.org/os/linux/rsync.html">http://wiki.manan.org/os/linux/rsync.html</a>。
+更多关于rsync续传的内容，可以参考我的wiki：<a href="http://wiki.manan.org/os/linux/rsync.html">http://wiki.manan.org/os/linux/rsync.html</a>。
 </p>

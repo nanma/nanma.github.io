@@ -23,7 +23,7 @@ cnt=$(ps aux | grep "\<$binary\>" | grep -v "grep" | grep -v "\<vi\>" | wc -l)
       echo "No server instance found"
     fi
     kill -9 $pid
-nohup rsync -av -e 'ssh -i /home/manan/prikey' search@10.10.65.160:/var/data /var > /home/user/data.log 2>&1 &
+nohup rsync -av -e 'ssh -i /home/user/prikey' search@10.10.65.160:/var/data /var > /home/user/data.log 2>&1 &
 #+END_SRC
 脚本会中断VPN并重连，杀掉已有的rsync进程，然后重启rsync任务。在crontab中添加这个脚本，每两个小时执行一次：
 #+BEGIN_SRC sh
@@ -32,8 +32,8 @@ nohup rsync -av -e 'ssh -i /home/manan/prikey' search@10.10.65.160:/var/data /va
 #+END_SRC
 不过实际执行中发现，数据传输始终不能完成。原来在间隔的两小时内，有些大文件传不完，rsync进程重启再次从头开始传输中断 的文件，传完之前又被杀掉，如此循环往复。经过查询，rsync支持断点续传，在原来命令上加入 =-P= 参数就可以了。把上面脚本中rsync命令改成：
 #+BEGIN_SRC sh
-nohup rsync -avP -e 'ssh -i /home/manan/prikey' ...
+nohow rsync -avP -e 'ssh -i /home/manan/prikey' ...
 #+END_SRC
 再次开始任务，数据传输很快完成。
 
-更多关于rsync的续传，可以参考我的wiki：http://wiki.manan.org/os/linux/rsync.html。
+更多关于rsync续传的内容，可以参考我的wiki：http://wiki.manan.org/os/linux/rsync.html。
