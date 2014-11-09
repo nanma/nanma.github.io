@@ -43,7 +43,7 @@ title: 马楠的博客
 description: 马楠的博客——发出声音就是寻找自我的开始。
 keywords: manan blog
 url: http://manan.org
-feed: /atom.xml
+feed: /feed.xml
 favicon: http://manan.org/images/favicon.ico
 
 #Nav config
@@ -74,7 +74,7 @@ author:
 #Follow me, you can choose your icon by http://fortawesome.github.io/Font-Awesome/icons/#brand
 follow:
   - class: icon-rss
-    url: /atom.xml
+    url: /feed.xml
   - class: icon-weibo
     url: http://weibo.com/imlittlehorse
 #  - class: icon-renren
