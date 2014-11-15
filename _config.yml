@@ -116,3 +116,6 @@ disqus:
 duoshuo:
   config: true
   id: manan
+
+baidutongji:
+  config: true
