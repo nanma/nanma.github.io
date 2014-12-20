@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>2014-12-20-on-source-code-reading</title>
+<!-- 2014-12-20 六 22:47 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="manan" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">2014-12-20-on-source-code-reading</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. on source code reading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="_mo_">_mo_</span></span></a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><a id="ID-A10D71AF-0B86-4B7B-AC77-D2D3E9E65A09" name="ID-A10D71AF-0B86-4B7B-AC77-D2D3E9E65A09"></a><span class="section-number-2">1</span> on source code reading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="_mo_">_mo_</span></span></h2>
+<div class="outline-text-2" id="text-1">
+
+<p>
+最近在读一些开源项目代码，突然想起来蔡学镛老师在微博上发表过一些代码阅读方法的心得，就做了一番搜索（<a href="http://weibo.com/rebol?key_word=%E6%BA%90%E4%BB%A3%E7%A0%81&is_search=1#_0">http://weibo.com/rebol?key_word=%E6%BA%90%E4%BB%A3%E7%A0%81&is_search=1#_0</a> ），整理如下，作为参考。
+</p>
+
+<blockquote>
+<p>
+如何有效阅读源代码，我的经验：1) 先阅读架构文档 2) 根据架构，将源码文件以模块（或上下层级）分类 3) 从最独立（依赖性最小）的模块代码读起 4) 阅读该模块功能文档 5) 阅读该模块源代码 6) 一边阅读一边整理「调用关系表」（很久以前我的某条微博提过）7) goto 3
+</p>
+
+<p>
+2012-12-2 10:13 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我傻傻地读了两星期别人的源代码，然后才发现居然有设计文档。虽然部分内容过时，和代码有差异，但还是有相当高的参考价值。我于是放下源代码，改读设计文档。&#x2026; 下次我跳下去读源代码前，一定要仔细搜索有无设计文档呀！
+2012-6-16 10:27 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+开老师这条微博刚好符合我过去这几条微博的内容主题：阅读源代码（紧急＋长期），制作「调用关系表」（重要＋短暂＋可以提升阅读源代码的效率）。
+</p>
+
+<p>
+@李开复
+【不要成为紧急的奴隶，重要的事为先】某人很吃力地在锯木头，旧的没锯完，新的又送来，越堆越多，不断加班。盆友提醒他：“你的锯子钝了，所以效率甚差，磨利再锯吧！” 他说：“工作都做不完，哪有时间磨锯子？” 好心人仍不死心，问：“那你何时磨锯子呢？” 他说：“等我锯完所有木头再说。”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+阅读他人的源代码就像是探访亚马逊雨林，事前多做一些准备工作，虽然花时间，但是很值得。在代码丛林中，「调用关系表」就是我的地图与 GPS。
+2012-6-14 09:04 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+阅读源代码时，将代码顺手图像化，有助于我思考与记忆。位置、色彩、形状，这些都是我将源代码图像化时会采用的手段。
+2012-6-13 17:36 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+这两天正在读一份源代码，之前读过同一份源代码很多次，但每次都觉得好像没有收获。不过这次读，感觉就满有收获的。&#x2026; 我想，之前多次虽然貌似读不懂，但应该有积累了一些什么，才能让这次有爆发的感觉。
+2012-6-7 21:23 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+通过 Debugger 或 Stack 的方式了解函数的调用关系，只能知道「某个」调用路径，并不全面，且比较容易失去方向感，不适合读源代码时使用。「函数调用图」通常相当杂乱，所以我个人不喜欢。我感觉用「函数调用表」会比较清晰一点，且我会持续修改这张表。
+2011-10-19 17:43 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+阅读他人的源代码时，我会先整理出「函数调用表」，调整次序，并标注颜色。通过这个表，可以知道调用依赖关系、递归函数、函数被调用次数、函数目的。阅读代码失去方向性时，就看一下这个表。
+</p>
+
+
+<div class="figure">
+<p><img src="./images/2014/12/func-call.jpg" alt="func-call.jpg" />
+</p>
+</div>
+
+<p>
+2011-10-19 14:04 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+对我来说，阅读优良的源代码，通常不是为了要学习语言的用法（Syntax），更多是要学习该语言的惯用语（Idiom）。惯用语是经年累月累积出来的优良语法模式（Syntax Pattern）。每次学到新的惯用语，就很开心。20 年前的《Advanced C++ Programming Styles and Idioms》是早期我读过关于惯用语的书。
+</p>
+
+<p>
+2011-9-27 22:43 来自 微博 weibo.com
+</p>
+</blockquote>
+
+<p>
+个人心得：面向过程代码（C）用函数调用表更好，面向对象代码（C++）用类图更好。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: manan</p>
+<p class="date">Created: 2014-12-20 六 22:47</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

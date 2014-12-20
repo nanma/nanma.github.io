@@ -1,15 +1,15 @@
 * COMMENT Project Definitions              :PROJECT_DEFS:
 ** mo
    :PROPERTIES:
-   :ID:       4738708B-7E0D-4DED-9DC7-47662A59B0FA
+   :ID:       43FF6F0E-72E3-4DDC-9C0C-EB5EE18CAF67
    :END:
 *** body-only t
 *** publish-to-jekyll t
 *** default-layout "post"
-*** base-directory "~/Documents/blog/_org"
+*** base-directory "/Users/manan/Documents/Marboo/MyNotes.localized/blog/_org"
 *** base-extension "org"
 *** recursive t
-*** publishing-directory "~/Documents/blog/_posts/"
+*** publishing-directory "/Users/manan/Documents/Marboo/MyNotes.localized/blog/_posts"
 *** publishing-function 'org-html-publish-to-html
 *** headline-levels 4
 *** section-numbers nil
@@ -25,8 +25,8 @@
 *** with-latex t
 *** with-drawers nil
 *** toc-heading "Contents"
-*** static-base-directory "~/Documents/blog/images"
-*** static-publishing-directory "~/Documents/blog/_posts/static/"
+*** static-base-directory "/Users/manan/Documents/Marboo/MyNotes.localized/blog/images""
+*** static-publishing-directory "/Users/manan/Documents/Marboo/MyNotes.localized/blog/images/"
 *** static-base-extension "css\\|js\\|less\\|scss\\|php\\|rb\\|py\\|pdf\\|jpg\\|gif\\|png"
 *** static-publishing-function 'org-publish-attachment
 *** static-recursive t
