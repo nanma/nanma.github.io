@@ -1,0 +1,88 @@
+* alfred workflow tutorial :_mo_:
+  :PROPERTIES:
+  :ID:       ED3E4B62-6E18-44B3-A3A4-B2700951208D
+  :DATE: [2014-12-27 六]
+  :END:
+
+每天写时间日志时需要输入日期，输入当天的日期比较简单，输入法一般都提供快捷键，输入 =rq= 后，候选词中就会出现当日日期的各种格式:
+
+[[./images/2014/12/rq.png]]
+
+如果要输入昨天、明天、后天等相近日期，我没有找到便捷的方法。想到在Mac中可以用Alfred的扩展功能（workflow）实现这个功能，就尝试编写了一个扩展，本文记录了编写扩展的过程。
+
+** 思路
+Alfred是一款OS X下的启动器软件，通过它可以用键盘快捷键快速启动软件，或者执行其他更为复杂的操作，比如搜索文件、查询单词、搜索网页等。Alfred还提供了Workflows功能，用户通过它可以自己开发新的功能。
+
+本文要实现的效果是激活alfred后，输入代表日期的快捷键然后回车，相应的日期复制到剪贴板中。效果如下：
+
+[[./images/2014/12/show.png]]
+
+此时粘贴剪贴板的内容为：
+
+#+BEGIN_EXAMPLE
+2014年12月26日 星期五
+#+END_EXAMPLE
+
+** 实现过程
+在Alfred的Workflows选项卡中点击 =+-Blank workflow= ，输入将要新建的workflow名称，点击 =create= 。
+
+此时的workflow是空的，点击右上角的 =+= 号开始添加控件，如下图所示：
+
+[[./images/2014/12/aquire-date.png]]
+
+*** 输入控件
+图中最左侧一列是 =input-keyword= 控件，可以为它配置相应的关键词以激活后续的功能，具体配置如下：
+
+[[./images/2014/12/key.png]]
+
+上图中选择了 =no-argument= , 如果需要从Alfred输入框传入参数，可以选择其他两项参数。
+
+*** 动作控件
+中间一列是 =action-Run Script= ，它将根据传入的参数运行指定的脚本，配置如下：
+
+[[./images/2014/12/run.png]]
+
+图中的命令 =python date.py zt= , =date.py= 是我编写的脚本，后面具体介绍。 =zt= 是传给脚本的参数。
+
+*** 输出控件
+最后一列图标是 =outputs-Copy to clipboard= ，它的作用是将前一项的输出拷贝到系统剪贴板中，它的配置如图：
+
+[[./images/2014/12/copy.png]]
+
+图中 ={query}= 代表前一项的输出。
+
+上面的三种图标代表了一个Workflow的三个要素：输入，动作和输出，还有一个要素『触发』本文没有涉及。输入关键词后，脚本计算得到日期，然后拷贝到剪贴板中。脚本 =date.py= 的实现如下：
+
+#+BEGIN_SRC python
+import datetime
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+week = [u'一', u'二', u'三', u'四', u'五', u'六', u'日']
+
+def delta(x):
+    return {
+        'zt': -1,
+        'jt': 0,
+        'mt': 1,
+        'ht': 2,
+    }[x]
+
+if len(sys.argv) == 2:
+    query = sys.argv[1]
+    today = datetime.date.today( )
+    target = today + datetime.timedelta(days=delta(query))
+    ISOFORMAT = '%Y年%m月%d日 星期'
+    result = target.strftime(ISOFORMAT) + str(week[target.weekday()])
+    print result
+#+END_SRC
+
+完成上面三个控件后，用鼠标将它们连接起来，就完成了workflow的编写。
+
+使用时，在Alfred的输入框中输入相应的关键字，如 =mt= 代表 =明天= ，然后回车，相应日期就复制到了剪贴板中。
+
+如果要发布自己开发的Workflow供别人使用，在左侧的插件名称上右键，点击 =export= 就可以将worflow打包。
+
+** 总结
+本文以一个复制最近几日日期的扩展为例，演示了Alfred workflow的开发过程。
