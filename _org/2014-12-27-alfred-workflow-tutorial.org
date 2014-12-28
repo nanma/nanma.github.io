@@ -13,7 +13,7 @@
 ** 思路
 Alfred是一款OS X下的启动器软件，通过它可以用键盘快捷键快速启动软件，或者执行其他更为复杂的操作，比如搜索文件、查询单词、搜索网页等。Alfred还提供了Workflows功能，用户通过它可以自己开发新的功能。
 
-本文要实现的效果是激活alfred后，输入代表日期的快捷键然后回车，相应的日期复制到剪贴板中。效果如下：
+本文要实现的效果是激活Alfred后，输入代表日期的快捷键然后回车，相应的日期复制到剪贴板中。效果如下：
 
 [[./images/2014/12/show.png]]
 
@@ -83,6 +83,8 @@ if len(sys.argv) == 2:
 使用时，在Alfred的输入框中输入相应的关键字，如 =mt= 代表 =明天= ，然后回车，相应日期就复制到了剪贴板中。
 
 如果要发布自己开发的Workflow供别人使用，在左侧的插件名称上右键，点击 =export= 就可以将worflow打包。
+
+本文实现的Alfred workflow 发布主页是：https://github.com/nanma/awesome-alfred-workflows/tree/master/Aquire-Date ，欢迎使用和反馈。
 
 ** 总结
 本文以一个复制最近几日日期的扩展为例，演示了Alfred workflow的开发过程。
