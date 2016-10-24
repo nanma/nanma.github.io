@@ -1,0 +1,135 @@
+* one step vpn                                                         :_mo_:
+  :PROPERTIES:
+  :ID:       85F8808F-1B63-4141-BD56-589F1E2932C7
+  :DATE: [2016-10-23]
+  :END:
+
+公司的 VPN 采用了固定密码加 Google Authenticator 随机密码的两步验证方式，每次在家办公时手动输入连接 VPN，非常麻烦。参考小方同学的[[http://fangpeishi.com/happy_vpn.html][文章]]写了个一键登录 VPN 的 Alfred workflow，本文记录了具体过程。
+
+** 通过脚本获得 Authenticator Token
+安装oath-toolkit，用于通过命令行获得 token。
+#+BEGIN_SRC sh
+brew update
+brew install oath-toolkit
+#+END_SRC
+
+创建$HOME/.otpkeys 文件，输入Token生成码，格式：
+#+BEGIN_SRC sh
+「名称」=「生成码」
+例：
+google=UKPPIDEALLKPYTT9
+#+END_SRC
+
+新建脚本文件 =./oath.sh= ：
+
+#+BEGIN_SRC sh
+#!/bin/bash
+#fork from http://superuser.com/questions/462478/is-there-a-google-authenticator-desktop-client , by Peter Beckman
+
+scriptname=`basename $0`
+if [ -z $1 ]
+then
+echo "$scriptname: Service Name Req'd"
+echo ""
+echo "Usage:"
+echo "   otp google"
+echo ""
+echo "Configuration: $HOME/.otpkeys"
+echo "Format: name=key"
+exit
+fi
+otpkey=` grep ^$1 $HOME/.otpkeys | cut -d"=" -f 2 | sed "s/ //g" `
+if [ -z $otpkey ]
+then
+echo "$scriptname: Bad Service Name"
+exit
+fi
+token=`/usr/local/bin/oathtool --totp -b $otpkey`
+echo $token
+echo $token | /usr/bin/pbcopy #自动拷贝至剪贴板
+
+#+END_SRC
+
+打开终端，执行 [脚本名] [名称] 试一试:
+#+BEGIN_SRC sh
+ ~  cat ~/.otpkeys
+google=UKPPIDEALLKPYTT9
+ ~  sh ./oath.sh google
+123456
+#+END_SRC
+
+如果 =oath.sh= 脚本输出了6位数字，说明随机 token 生成成功。
+
+** 脚本连接 VPN
+下载安装 Cisco AnyConnect Secure Mobility Client。
+
+编写脚本 =./vpn.sh= 用于登录 VPN：
+
+#+BEGIN_SRC sh
+#!/bin/bash
+
+if [ $# -eq 1 ]
+then
+    command=$1
+else
+    command='connect'
+fi
+
+if [ $command == 'stop' ]
+then
+    echo 'stop vpn'
+    /opt/cisco/anyconnect/bin/vpn disconnect
+    exit
+fi
+
+echo 'start vpn'
+username='[your ldap username]'
+passwd='[your ldap password]'`sh ./oath.sh [profile_name]`
+
+/opt/cisco/anyconnect/bin/vpn -s << EOF
+connect [vpn address]
+$username
+$passwd
+EOF
+
+#+END_SRC
+
+然后修改 vpn.sh 中的各项信息：
+
+#+BEGIN_SRC sh
+[your vpn username]
+[your vpn password]
+[profile_name]
+[vpn address]
+#+END_SRC
+
+*** 连接 VPN
+#+BEGIN_SRC sh
+./vpn.sh start
+#+END_SRC
+
+*** 断开 VPN
+#+BEGIN_SRC sh
+./vpn.sh stop
+#+END_SRC
+
+至此，已经可以通过脚本一键连接、断开 VPN，不需要再输入密码。
+
+脚本下载：https://github.com/nanma/codesnip/tree/master/scripts/cisco-vpn 。
+
+但是程序员的懒惰是无止境的，脚本还需要打开终端敲命令。作为 Alfred 的忠实爱好者，第一反应就是做个 workflow 出来。
+
+** 编写 Alfred Workflow
+
+因为有了前面的脚本，实现 workflow 是很简单的。只需要两个部件：「Keyword」 和「Run script」，如下图所示：
+
+[[./images/2016/10/vpn-workflow.png]]
+
+其中，「Keyword」获得用户输入，将连接（start） 或是断开（stop） 的命令发给脚本，「Run script」调用前面写好的 =./vpn.sh= 脚本完成连接、断开。
+
+Workflow 的下载地址：https://github.com/nanma/awesome-alfred-workflows/tree/master/VPN-Toggle 。
+
+参考链接：
+1. Any connect 命令行用法：  http://www.cisco.com/c/en/us/td/docs/security/vpn_client/anyconnect/anyconnect30/administration/guide/anyconnectadmin30/ac15userguidelines.html#32168
+2. 一键连接VPN，http://fangpeishi.com/happy_vpn.html
+3. Any connect 命令行参数： http://stackoverflow.com/questions/21533471/cisco-anyconnect-command-line-parse-profile-or-command-line-arguments
