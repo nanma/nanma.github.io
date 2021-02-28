@@ -1,8 +1,10 @@
 # Where things are
 source:       .
 destination:  ./_site
-plugins:      ./_plugins
-layouts:      ./_layouts
+#plugins:      ./_plugins
+plugins: [jekyll-paginate]
+#layouts:      ./_layouts
+layouts_dir:      ./_layouts
 paginate:     8
 
 # Handling Reading
@@ -113,9 +115,9 @@ disqus:
   config: false
   id: piznblog
 
-duoshuo:
-  config: true
-  id: manan
+#duoshuo:
+#  config: true
+#  id: manan
 
 baidutongji:
   config: true
